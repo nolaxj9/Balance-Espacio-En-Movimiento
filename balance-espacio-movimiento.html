@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Balance Espacio en Movimiento</title>
+<meta name="description" content="Danza, bachata, calistenia, flexibilidad, acrobungee y movimiento primal. Un espacio para moverte distinto.">
+<link rel="icon" href="assets/logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;1,500&family=IBM+Plex+Sans:wght@400;500&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#F8F5EF;
+    --bg-alt:#FFFFFF;
+    --ink:#131210;
+    --dark:#0D0C0A;
+    --muted:#6E675A;
+    --gold:#A9834C;
+    --gold-soft:#C9A96B;
+    --line:rgba(19,18,16,0.14);
+    --line-dark:rgba(248,245,239,0.16);
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--bg);
+    color:var(--ink);
+    font-family:'IBM Plex Sans', sans-serif;
+    line-height:1.55;
+    overflow-x:hidden;
+  }
+  h1,h2,h3,.display{
+    font-family:'Playfair Display', serif;
+    font-weight:700;
+    letter-spacing:-0.01em;
+  }
+  .mono{
+    font-family:'IBM Plex Mono', monospace;
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+    font-size:0.75rem;
+  }
+  a{color:inherit; text-decoration:none;}
+  .wrap{max-width:1120px; margin:0 auto; padding:0 24px;}
+  img{display:block; max-width:100%;}
+
+  /* HEADER */
+  header{
+    position:fixed; top:0; left:0; right:0; z-index:100;
+    display:flex; align-items:center; justify-content:space-between;
+    padding:14px 32px;
+    transition:background .3s ease, box-shadow .3s ease;
+  }
+  header.scrolled{
+    background:rgba(248,245,239,0.92);
+    backdrop-filter:blur(8px);
+    box-shadow:0 1px 0 var(--line);
+  }
+  .logo-mark{display:flex; align-items:center; gap:10px;}
+  .logo-mark img{height:38px; width:auto;}
+  .logo-round{
+    height:44px; width:44px; border-radius:50%;
+    object-fit:cover; object-position:center;
+    border:1px solid var(--line);
+    background:#fff;
+  }
+  .brand-name{
+    font-family:'Playfair Display'; font-weight:700; font-size:0.95rem;
+    letter-spacing:0.03em;
+  }
+  nav{display:flex; gap:30px; font-size:0.82rem; letter-spacing:0.04em; text-transform:uppercase;}
+  nav a{opacity:0.75; transition:opacity .2s, color .2s;}
+  nav a:hover{opacity:1; color:var(--gold);}
+  .nav-toggle{display:none; font-size:1.5rem; background:none; border:none; color:var(--ink); cursor:pointer;}
+
+  /* HERO */
+  .hero{
+    min-height:92svh;
+    display:flex; flex-direction:column; justify-content:center;
+    position:relative;
+    padding-top:110px;
+  }
+  .hero-content{position:relative; z-index:1;}
+  .eyebrow{color:var(--gold); margin-bottom:20px; display:block;}
+  .hero h1{
+    font-size:clamp(2.4rem, 6vw, 4.6rem);
+    line-height:1.05;
+    font-style:italic;
+    font-weight:500;
+  }
+  .hero h1 em{
+    font-style:normal;
+    font-weight:700;
+    color:var(--gold);
+  }
+  .hero p{
+    max-width:520px;
+    color:var(--muted);
+    font-size:1.05rem;
+    margin-top:26px;
+  }
+  .cta-row{display:flex; gap:16px; margin-top:38px; flex-wrap:wrap;}
+  .btn{
+    display:inline-block;
+    padding:15px 30px;
+    border-radius:1px;
+    font-size:0.78rem;
+    font-weight:500;
+    text-transform:uppercase;
+    letter-spacing:0.1em;
+    transition:transform .2s ease, background .2s ease, color .2s ease;
+  }
+  .btn-solid{background:var(--dark); color:var(--bg);}
+  .btn-solid:hover{transform:translateY(-2px); background:var(--gold); color:var(--dark);}
+  .btn-outline{border:1px solid var(--line); color:var(--ink);}
+  .btn-outline:hover{border-color:var(--gold); color:var(--gold);}
+
+  .stats{display:flex; gap:44px; margin-top:60px; flex-wrap:wrap;}
+  .stat b{display:block; font-size:1.7rem; font-family:'Playfair Display'; font-weight:700;}
+  .stat span{font-size:0.72rem; color:var(--muted); text-transform:uppercase; letter-spacing:0.1em;}
+
+  /* BANNER (imagen de marca) */
+  .brand-banner{
+    background:var(--bg-alt);
+    border-top:1px solid var(--line);
+    border-bottom:1px solid var(--line);
+  }
+  .brand-banner img{width:100%; height:auto; display:block;}
+
+  /* MARQUEE */
+  .marquee-band{
+    background:var(--dark);
+    color:var(--gold-soft);
+    overflow:hidden;
+    white-space:nowrap;
+    padding:16px 0;
+  }
+  .marquee-track{
+    display:inline-block;
+    animation:scroll 28s linear infinite;
+    font-family:'Playfair Display'; font-weight:700; font-style:italic;
+    font-size:1.15rem;
+  }
+  .marquee-track span{margin:0 24px;}
+  @keyframes scroll{
+    0%{transform:translateX(0);}
+    100%{transform:translateX(-50%);}
+  }
+  @media (prefers-reduced-motion: reduce){
+    .marquee-track{animation:none;}
+  }
+
+  /* SECTION GENERIC */
+  section{padding:110px 0;}
+  .section-head{margin-bottom:56px; max-width:600px;}
+  .section-head .mono{color:var(--gold);}
+  .section-head h2{font-size:clamp(2rem, 4vw, 2.6rem); margin-top:12px; font-weight:700;}
+
+  /* CLASES */
+  .clases-grid{
+    display:grid;
+    grid-template-columns:repeat(3, 1fr);
+    gap:1px;
+    background:var(--line);
+    border:1px solid var(--line);
+  }
+  .clase-card{
+    background:var(--bg-alt);
+    padding:38px 30px;
+    transition:background .25s ease;
+  }
+  .clase-card:hover{background:var(--bg);}
+  .clase-num{font-family:'IBM Plex Mono'; font-size:0.72rem; color:var(--gold); letter-spacing:0.1em;}
+  .clase-card h3{font-size:1.3rem; margin:14px 0 10px; font-weight:700;}
+  .clase-card p{color:var(--muted); font-size:0.92rem;}
+
+  /* INSTRUCTORES */
+  .instructores{display:grid; grid-template-columns:1fr 1fr; gap:1px; background:var(--line); border:1px solid var(--line);}
+  .instructor{background:var(--bg-alt); padding:46px 38px; position:relative;}
+  .instructor h3{font-size:1.6rem; margin:14px 0 8px; font-weight:700;}
+  .instructor p{color:var(--muted); font-size:0.95rem; max-width:380px;}
+  .instructor .mono{color:var(--gold);}
+
+  /* HORARIOS */
+  .horarios-table{width:100%; border-collapse:collapse; font-size:0.92rem;}
+  .horarios-table th{
+    text-align:left; font-family:'IBM Plex Mono'; text-transform:uppercase;
+    font-size:0.7rem; letter-spacing:0.1em; color:var(--muted);
+    padding:12px 16px; border-bottom:1px solid var(--line);
+  }
+  .horarios-table td{padding:16px; border-bottom:1px solid var(--line);}
+  .horarios-table tr:hover td{background:var(--bg-alt);}
+  .edit-note{
+    display:inline-block; margin-top:26px; font-size:0.78rem; color:var(--muted);
+    border:1px dashed var(--line); padding:10px 16px; border-radius:1px;
+  }
+
+  /* CONTACTO */
+  .contacto{
+    background:var(--dark);
+    color:var(--bg);
+    border-radius:2px;
+    padding:56px;
+    display:grid;
+    grid-template-columns:1.2fr 1fr;
+    gap:48px;
+  }
+  .contacto h2{color:var(--bg); font-size:2rem; margin-bottom:16px;}
+  .contacto > div > p{color:rgba(248,245,239,0.65);}
+  .contacto .btn-solid{background:var(--gold); color:var(--dark);}
+  .contacto .btn-solid:hover{background:var(--gold-soft);}
+  .info-block{margin-top:28px;}
+  .info-block .mono{color:var(--gold); display:block; margin-bottom:6px;}
+  .info-block p{color:var(--bg); margin-bottom:20px;}
+  .info-block a:hover{color:var(--gold-soft);}
+
+  footer{
+    padding:44px 0;
+    border-top:1px solid var(--line);
+    text-align:center;
+    color:var(--muted);
+    font-size:0.82rem;
+  }
+  footer .logo-mark{justify-content:center; margin-bottom:18px;}
+  footer .logo-round{height:34px; width:34px;}
+  footer .brand-name{font-size:0.85rem;}
+  footer a{color:var(--gold);}
+
+  @media (max-width:900px){
+    .clases-grid{grid-template-columns:repeat(2,1fr);}
+    .instructores{grid-template-columns:1fr;}
+    .contacto{grid-template-columns:1fr; padding:36px;}
+  }
+  @media (max-width:640px){
+    nav{
+      position:fixed; top:0; right:-100%; height:100svh; width:70%;
+      background:var(--bg-alt); flex-direction:column; padding:100px 32px;
+      transition:right .3s ease; gap:24px; font-size:0.85rem;
+    }
+    nav.open{right:0;}
+    .nav-toggle{display:block;}
+    .clases-grid{grid-template-columns:1fr;}
+    section{padding:70px 0;}
+  }
+</style>
+</head>
+<body>
+
+<header id="header">
+  <div class="logo-mark">
+    <img class="logo-round" src="assets/logo-icon.png" alt="Balance Espacio en Movimiento">
+    <span class="brand-name">Balance Espacio en Movimiento</span>
+  </div>
+  <nav id="nav">
+    <a href="#clases">Clases</a>
+    <a href="#instructores">Instructores</a>
+    <a href="#horarios">Horarios</a>
+    <a href="#contacto">Contacto</a>
+  </nav>
+  <button class="nav-toggle" id="navToggle" aria-label="Abrir menú">☰</button>
+</header>
+
+<section class="hero">
+  <div class="wrap hero-content">
+    <span class="eyebrow mono">Danza · Fuerza · Vuelo</span>
+    <h1>El equilibrio<br>se entrena,<br><em>no se espera.</em></h1>
+    <p>Un espacio de movimiento donde la danza, la calistenia, la flexibilidad y el vuelo en acrobungee se encuentran. Cuerpo, ritmo y fuerza, en un mismo lugar.</p>
+    <div class="cta-row">
+      <!-- EDITAR: reemplazar el número por el WhatsApp real, formato 549XXXXXXXXXX -->
+      <a class="btn btn-solid" href="https://wa.me/5490000000000?text=Hola!%20Quiero%20info%20sobre%20las%20clases" target="_blank">Reservar una clase</a>
+      <a class="btn btn-outline" href="https://www.instagram.com/balanceespaciomovimiento/" target="_blank">Ver Instagram</a>
+    </div>
+    <div class="stats">
+      <div class="stat"><b>6</b><span>Disciplinas</span></div>
+      <div class="stat"><b>2</b><span>Profesores</span></div>
+      <div class="stat"><b>800+</b><span>En la comunidad</span></div>
+    </div>
+  </div>
+</section>
+
+<div class="brand-banner">
+  <img src="assets/portada.png" alt="Balance Espacio en Movimiento — Lily Leguizamón y Kevin Grossenbacher, clases de danza, bachata, calistenia, flexibilidad, acrobungee y movimiento primal">
+</div>
+
+<div class="marquee-band">
+  <div class="marquee-track">
+    <span>Danza</span><span>·</span><span>Bachata</span><span>·</span><span>Calistenia</span><span>·</span><span>Flexibilidad</span><span>·</span><span>Acrobungee</span><span>·</span><span>Movimiento primal</span><span>·</span>
+    <span>Danza</span><span>·</span><span>Bachata</span><span>·</span><span>Calistenia</span><span>·</span><span>Flexibilidad</span><span>·</span><span>Acrobungee</span><span>·</span><span>Movimiento primal</span><span>·</span>
+  </div>
+</div>
+
+<section id="clases" class="wrap">
+  <div class="section-head">
+    <span class="mono">Nuestras clases</span>
+    <h2>Seis formas de moverte</h2>
+  </div>
+  <div class="clases-grid">
+    <div class="clase-card">
+      <span class="clase-num">01</span>
+      <h3>Danza</h3>
+      <p>Coreografía, expresión y conexión entre cuerpo y música, para todos los niveles.</p>
+    </div>
+    <div class="clase-card">
+      <span class="clase-num">02</span>
+      <h3>Bachata</h3>
+      <p>Ritmo, técnica y conexión en pareja. Sensualidad con base técnica sólida.</p>
+    </div>
+    <div class="clase-card">
+      <span class="clase-num">03</span>
+      <h3>Calistenia</h3>
+      <p>Fuerza real usando el propio peso corporal. Progresiones para principiantes y avanzados.</p>
+    </div>
+    <div class="clase-card">
+      <span class="clase-num">04</span>
+      <h3>Flexibilidad</h3>
+      <p>Movilidad articular y elongación activa para moverte sin límites ni dolor.</p>
+    </div>
+    <div class="clase-card">
+      <span class="clase-num">05</span>
+      <h3>Acrobungee</h3>
+      <p>Suspensión aérea con arnés elástico. Vuelo controlado, fuerza y adrenalina.</p>
+    </div>
+    <div class="clase-card">
+      <span class="clase-num">06</span>
+      <h3>Movimiento primal</h3>
+      <p>Patrones ancestrales de movimiento para un cuerpo más funcional y consciente.</p>
+    </div>
+  </div>
+</section>
+
+<section id="instructores" class="wrap">
+  <div class="section-head">
+    <span class="mono">Quiénes enseñan</span>
+    <h2>Los profesores</h2>
+  </div>
+  <div class="instructores">
+    <div class="instructor">
+      <span class="mono">Prof. de Danza</span>
+      <h3>Lily Leguizamón</h3>
+      <p>A cargo de las clases de danza y bachata, con foco en técnica, musicalidad y expresión corporal.</p>
+    </div>
+    <div class="instructor">
+      <span class="mono">Personal Trainer</span>
+      <h3>Kevin Grossenbacher</h3>
+      <p>A cargo de calistenia, flexibilidad, acrobungee y movimiento primal, con planes de entrenamiento personalizados.</p>
+    </div>
+  </div>
+</section>
+
+<section id="horarios" class="wrap">
+  <div class="section-head">
+    <span class="mono">Cuándo entrenamos</span>
+    <h2>Horarios de clases</h2>
+  </div>
+  <table class="horarios-table">
+    <thead>
+      <tr><th>Clase</th><th>Día</th><th>Horario</th><th>Profesor/a</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Danza clásica</td><td>Lunes, Miércoles, Viernes</td><td>19:00 hs</td><td>Lily Leguizamón</td></tr>
+      <tr><td>Danza contemporánea</td><td>Viernes</td><td>20:00 hs</td><td>Lily Leguizamón</td></tr>
+      <tr><td>Bachata</td><td>Miércoles y Viernes</td><td>21:00 hs</td><td>Lily Leguizamón</td></tr>
+      <tr><td>Calistenia</td><td>Martes y Jueves</td><td>17:00 hs</td><td>Kevin Grossenbacher</td></tr>
+      <tr><td>Flexibilidad</td><td>Lunes, Martes, Miércoles y Jueves</td><td>20:00 hs</td><td>Kevin Grossenbacher</td></tr>
+      <tr><td>Acrobungee (adultos)</td><td>Martes y Jueves</td><td>16:00 y 19:00 hs</td><td>Kevin Grossenbacher</td></tr>
+      <tr><td>Acrobungee (niños)</td><td>Martes y Jueves</td><td>18:00 hs</td><td>Kevin Grossenbacher</td></tr>
+      <tr><td>Movimiento primal</td><td>Viernes</td><td>18:00 hs</td><td>Kevin Grossenbacher</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<section id="contacto" class="wrap">
+  <div class="contacto">
+    <div>
+      <h2>Vení a moverte con nosotros</h2>
+      <p>Escribinos por WhatsApp o Instagram para reservar tu clase de prueba.</p>
+      <div class="cta-row">
+        <a class="btn btn-solid" href="https://wa.me/5490000000000?text=Hola!%20Quiero%20info%20sobre%20las%20clases" target="_blank">Escribir por WhatsApp</a>
+      </div>
+    </div>
+    <div>
+      <div class="info-block">
+        <span class="mono">Ubicación</span>
+        <!-- EDITAR: dirección real y ciudad -->
+        <p>Dirección del estudio, Ciudad</p>
+      </div>
+      <div class="info-block">
+        <span class="mono">Instagram</span>
+        <p><a href="https://www.instagram.com/balanceespaciomovimiento/" target="_blank">@balanceespaciomovimiento</a></p>
+      </div>
+      <div class="info-block">
+        <span class="mono">WhatsApp</span>
+        <!-- EDITAR: teléfono real -->
+        <p>+54 9 XXX XXX-XXXX</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="logo-mark">
+      <img class="logo-round" src="assets/logo-icon.png" alt="Balance Espacio en Movimiento">
+      <span class="brand-name">Balance Espacio en Movimiento</span>
+    </div>
+    Balance Espacio en Movimiento © 2026 · Entrená tu cuerpo, conectá tu mente · <a href="https://www.instagram.com/balanceespaciomovimiento/" target="_blank">Instagram</a>
+  </div>
+</footer>
+
+<script>
+  const header = document.getElementById('header');
+  window.addEventListener('scroll', () => {
+    header.classList.toggle('scrolled', window.scrollY > 40);
+  });
+  const nav = document.getElementById('nav');
+  const navToggle = document.getElementById('navToggle');
+  navToggle.addEventListener('click', () => nav.classList.toggle('open'));
+  nav.querySelectorAll('a').forEach(a => a.addEventListener('click', () => nav.classList.remove('open')));
+</script>
+
+</body>
+</html>
