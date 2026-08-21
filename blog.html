@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9932296407987067" crossorigin="anonymous"></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Blog — Balance Espacio en Movimiento</title>
+<meta name="description" content="Artículos sobre danza, bachata, calistenia, flexibilidad y acrobungee, escritos por los profesores de Balance Espacio en Movimiento.">
+<link rel="icon" href="assets/logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;1,500&family=IBM+Plex+Sans:wght@400;500&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#F8F5EF;
+    --bg-alt:#FFFFFF;
+    --ink:#131210;
+    --dark:#0D0C0A;
+    --muted:#6E675A;
+    --gold:#A9834C;
+    --gold-soft:#C9A96B;
+    --line:rgba(19,18,16,0.14);
+    --line-dark:rgba(248,245,239,0.16);
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--bg);
+    color:var(--ink);
+    font-family:'IBM Plex Sans', sans-serif;
+    line-height:1.55;
+    overflow-x:hidden;
+  }
+  h1,h2,h3,.display{
+    font-family:'Playfair Display', serif;
+    font-weight:700;
+    letter-spacing:-0.01em;
+  }
+  .mono{
+    font-family:'IBM Plex Mono', monospace;
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+    font-size:0.75rem;
+  }
+  a{color:inherit; text-decoration:none;}
+  .wrap{max-width:1120px; margin:0 auto; padding:0 24px;}
+  img{display:block; max-width:100%;}
+
+  header{
+    position:fixed; top:0; left:0; right:0; z-index:100;
+    display:flex; align-items:center; justify-content:space-between;
+    padding:14px 32px;
+    background:rgba(248,245,239,0.92);
+    backdrop-filter:blur(8px);
+    box-shadow:0 1px 0 var(--line);
+  }
+  .logo-mark{display:flex; align-items:center; gap:10px;}
+  .logo-mark img{height:38px; width:auto;}
+  nav{display:flex; gap:30px; font-size:0.82rem; letter-spacing:0.04em; text-transform:uppercase;}
+  nav a{opacity:0.75; transition:opacity .2s, color .2s;}
+  nav a:hover, nav a.active{opacity:1; color:var(--gold);}
+  .nav-toggle{display:none; font-size:1.5rem; background:none; border:none; color:var(--ink); cursor:pointer;}
+
+  section{padding:110px 0 90px;}
+  .page-head{max-width:640px; padding-top:40px; margin-bottom:56px;}
+  .page-head .mono{color:var(--gold);}
+  .page-head h1{font-size:clamp(2.2rem, 5vw, 3.2rem); margin-top:14px;}
+  .page-head p{color:var(--muted); margin-top:18px; font-size:1.02rem;}
+
+  .blog-grid{
+    display:grid; grid-template-columns:repeat(2, 1fr); gap:1px;
+    background:var(--line); border:1px solid var(--line);
+  }
+  .blog-card{background:var(--bg-alt); padding:40px 36px; transition:background .25s ease;}
+  .blog-card:hover{background:var(--bg);}
+  .blog-card .mono{color:var(--gold);}
+  .blog-card h2{font-size:1.4rem; margin:16px 0 12px;}
+  .blog-card p{color:var(--muted); font-size:0.94rem; margin-bottom:20px;}
+  .read-more{font-size:0.76rem; text-transform:uppercase; letter-spacing:0.1em; color:var(--gold); font-weight:500;}
+  .read-more:hover{color:var(--gold-soft);}
+
+  footer{
+    padding:44px 0; border-top:1px solid var(--line);
+    text-align:center; color:var(--muted); font-size:0.82rem;
+  }
+  footer .logo-mark{justify-content:center; margin-bottom:18px;}
+  footer .logo-mark img{height:30px;}
+  footer a{color:var(--gold);}
+
+  @media (max-width:900px){
+    .blog-grid{grid-template-columns:1fr;}
+  }
+  @media (max-width:640px){
+    nav{
+      position:fixed; top:0; right:-100%; height:100svh; width:70%;
+      background:var(--bg-alt); flex-direction:column; padding:100px 32px;
+      transition:right .3s ease; gap:24px; font-size:0.85rem;
+    }
+    nav.open{right:0;}
+    .nav-toggle{display:block;}
+    section{padding:70px 0 60px;}
+  }
+</style>
+</head>
+<body>
+
+<header id="header">
+  <div class="logo-mark">
+    <a href="index.html"><img src="assets/logo.png" alt="Balance Espacio en Movimiento"></a>
+  </div>
+  <nav id="nav">
+    <a href="index.html#clases">Clases</a>
+    <a href="index.html#instructores">Instructores</a>
+    <a href="index.html#horarios">Horarios</a>
+    <a href="blog.html" class="active">Blog</a>
+    <a href="index.html#contacto">Contacto</a>
+  </nav>
+  <button class="nav-toggle" id="navToggle" aria-label="Abrir menú">☰</button>
+</header>
+
+<section class="wrap">
+  <div class="page-head">
+    <span class="mono">El blog</span>
+    <h1>Notas sobre movimiento, cuerpo y práctica</h1>
+    <p>Artículos escritos por Lily y Kevin, los profesores de Balance Espacio en Movimiento, sobre las disciplinas que enseñamos y cómo entrenarlas bien.</p>
+  </div>
+
+  <div class="blog-grid">
+    <div class="blog-card">
+      <span class="mono">Calistenia · Kevin Grossenbacher</span>
+      <h2>Calistenia: entrená fuerza real con tu propio cuerpo</h2>
+      <p>Qué es, por qué funciona y cómo progresar sin apurar etapas ni lastimarte en el camino.</p>
+      <a class="read-more" href="blog/beneficios-calistenia.html">Leer artículo →</a>
+    </div>
+    <div class="blog-card">
+      <span class="mono">Flexibilidad · Kevin Grossenbacher</span>
+      <h2>Guía práctica para mejorar tu flexibilidad sin lastimarte</h2>
+      <p>Estiramiento estático vs. dinámico, una rutina básica para arrancar y los errores más comunes.</p>
+      <a class="read-more" href="blog/guia-flexibilidad.html">Leer artículo →</a>
+    </div>
+    <div class="blog-card">
+      <span class="mono">Bachata · Lily Leguizamón</span>
+      <h2>Bachata para principiantes: los primeros pasos</h2>
+      <p>No hace falta pareja fija ni experiencia previa. Qué se trabaja en una primera clase y qué esperar.</p>
+      <a class="read-more" href="blog/bachata-para-principiantes.html">Leer artículo →</a>
+    </div>
+    <div class="blog-card">
+      <span class="mono">Acrobungee · Kevin Grossenbacher</span>
+      <h2>Qué es el acrobungee y qué se siente volar con arnés elástico</h2>
+      <p>De dónde viene, qué trabaja en el cuerpo y cómo es la primera clase, paso a paso.</p>
+      <a class="read-more" href="blog/que-es-acrobungee.html">Leer artículo →</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="logo-mark">
+      <img src="assets/logo.png" alt="Balance Espacio en Movimiento">
+    </div>
+    Balance Espacio en Movimiento © 2026 · Entrená tu cuerpo, conectá tu mente · <a href="https://www.instagram.com/balanceespaciomovimiento/" target="_blank">Instagram</a> · <a href="https://www.facebook.com/profile.php?id=61579211276354" target="_blank">Facebook</a>
+  </div>
+</footer>
+
+<script>
+  const nav = document.getElementById('nav');
+  const navToggle = document.getElementById('navToggle');
+  navToggle.addEventListener('click', () => nav.classList.toggle('open'));
+  nav.querySelectorAll('a').forEach(a => a.addEventListener('click', () => nav.classList.remove('open')));
+</script>
+
+</body>
+</html>

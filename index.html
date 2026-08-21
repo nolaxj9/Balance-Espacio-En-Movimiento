@@ -186,6 +186,13 @@
     border:1px dashed var(--line); padding:10px 16px; border-radius:1px;
   }
 
+  /* BLOG TEASER */
+  .blog-teaser-grid{display:grid; grid-template-columns:repeat(4, 1fr); gap:1px; background:var(--line); border:1px solid var(--line);}
+  .blog-teaser-card{background:var(--bg-alt); padding:30px 24px; display:block; transition:background .25s ease;}
+  .blog-teaser-card:hover{background:var(--bg);}
+  .blog-teaser-card .mono{color:var(--gold);}
+  .blog-teaser-card h3{font-size:1.05rem; margin-top:12px; font-weight:700; line-height:1.3;}
+
   /* CONTACTO */
   .contacto{
     background:var(--dark);
@@ -220,6 +227,7 @@
     .clases-grid{grid-template-columns:repeat(2,1fr);}
     .instructores{grid-template-columns:1fr;}
     .contacto{grid-template-columns:1fr; padding:36px;}
+    .blog-teaser-grid{grid-template-columns:repeat(2,1fr);}
   }
   @media (max-width:640px){
     nav{
@@ -229,6 +237,7 @@
     }
     nav.open{right:0;}
     .nav-toggle{display:block;}
+    .blog-teaser-grid{grid-template-columns:1fr;}
     .clases-grid{grid-template-columns:1fr;}
     section{padding:70px 0;}
   }
@@ -244,6 +253,7 @@
     <a href="#clases">Clases</a>
     <a href="#instructores">Instructores</a>
     <a href="#horarios">Horarios</a>
+    <a href="blog.html">Blog</a>
     <a href="#contacto">Contacto</a>
   </nav>
   <button class="nav-toggle" id="navToggle" aria-label="Abrir menú">☰</button>
@@ -357,6 +367,32 @@
       <tr><td>Movimiento primal</td><td>Viernes</td><td>18:00 hs</td><td>Kevin Grossenbacher</td></tr>
     </tbody>
   </table>
+</section>
+
+<section id="blog" class="wrap">
+  <div class="section-head">
+    <span class="mono">El blog</span>
+    <h2>Notas sobre movimiento y práctica</h2>
+  </div>
+  <div class="blog-teaser-grid">
+    <a class="blog-teaser-card" href="blog/beneficios-calistenia.html">
+      <span class="mono">Calistenia</span>
+      <h3>Entrená fuerza real con tu propio cuerpo</h3>
+    </a>
+    <a class="blog-teaser-card" href="blog/guia-flexibilidad.html">
+      <span class="mono">Flexibilidad</span>
+      <h3>Guía práctica para mejorar sin lastimarte</h3>
+    </a>
+    <a class="blog-teaser-card" href="blog/bachata-para-principiantes.html">
+      <span class="mono">Bachata</span>
+      <h3>Los primeros pasos para principiantes</h3>
+    </a>
+    <a class="blog-teaser-card" href="blog/que-es-acrobungee.html">
+      <span class="mono">Acrobungee</span>
+      <h3>Qué se siente volar con arnés elástico</h3>
+    </a>
+  </div>
+  <a class="btn btn-outline" style="margin-top:36px; display:inline-block;" href="blog.html">Ver todos los artículos</a>
 </section>
 
 <section id="contacto" class="wrap">
