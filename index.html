@@ -262,17 +262,25 @@
   .instructor .mono{color:var(--primary); position:relative;}
 
   /* HORARIOS */
-  .horarios-wrap{overflow-x:auto; border-radius:20px;}
-  .horarios-table{width:100%; border-collapse:collapse; font-size:0.9rem; min-width:640px;}
-  .horarios-table th{
-    text-align:left; font-family:'Space Grotesk'; text-transform:uppercase;
-    font-size:0.68rem; letter-spacing:0.12em; color:var(--primary);
-    padding:18px 22px; border-bottom:1px solid var(--glass-border);
+  .horarios-days{display:grid; grid-template-columns:repeat(5, 1fr); gap:18px;}
+  .horario-day{padding:26px 24px; transition:border-color .3s ease, transform .3s ease;}
+  .horario-day:hover{border-color:var(--glass-border-hover); transform:translateY(-4px);}
+  .horario-day h3{
+    font-family:'Space Grotesk'; font-size:1rem; font-weight:700;
+    text-transform:uppercase; letter-spacing:0.08em; color:var(--primary);
+    margin-bottom:18px; padding-bottom:14px; border-bottom:1px solid var(--glass-border);
   }
-  .horarios-table td{padding:18px 22px; border-bottom:1px solid var(--glass-border); color:var(--text-secondary);}
-  .horarios-table td:first-child{color:var(--text); font-weight:500;}
-  .horarios-table tr:hover td{background:rgba(255,255,255,0.03); color:var(--text);}
-  .horarios-table tr:last-child td{border-bottom:none;}
+  .horario-slot{padding:12px 0; border-top:1px solid var(--glass-border);}
+  .horario-slot:first-of-type{border-top:none; padding-top:0;}
+  .horario-time{font-family:'Space Grotesk'; font-size:0.78rem; font-weight:600; color:var(--text-secondary); letter-spacing:0.02em;}
+  .horario-class{font-weight:600; margin-top:4px; font-size:0.92rem; color:var(--text);}
+  .horario-meta{font-size:0.8rem; color:var(--text-secondary); margin-top:2px;}
+  @media (max-width:1180px){
+    .horarios-days{grid-template-columns:repeat(3, 1fr);}
+  }
+  @media (max-width:640px){
+    .horarios-days{grid-template-columns:1fr;}
+  }
 
   /* BLOG TEASER */
   .blog-teaser-grid{display:grid; grid-template-columns:repeat(4, 1fr); gap:20px;}
@@ -485,22 +493,151 @@
     <span class="mono">Cuándo entrenamos</span>
     <h2>Horarios de clases</h2>
   </div>
-  <div class="horarios-wrap glass reveal">
-    <table class="horarios-table">
-      <thead>
-        <tr><th>Clase</th><th>Día</th><th>Horario</th><th>Profesor/a</th></tr>
-      </thead>
-      <tbody>
-        <tr><td>Danza clásica</td><td>Lunes, Miércoles, Viernes</td><td>19:00 hs</td><td>Lily Leguizamón</td></tr>
-        <tr><td>Danza contemporánea</td><td>Viernes</td><td>20:00 hs</td><td>Lily Leguizamón</td></tr>
-        <tr><td>Bachata</td><td>Miércoles y Viernes</td><td>21:00 hs</td><td>Lily Leguizamón</td></tr>
-        <tr><td>Calistenia</td><td>Martes y Jueves</td><td>17:00 hs</td><td>Kevin Grossenbacher</td></tr>
-        <tr><td>Flexibilidad</td><td>Lunes, Martes, Miércoles y Jueves</td><td>20:00 hs</td><td>Kevin Grossenbacher</td></tr>
-        <tr><td>Acrobungee (adultos)</td><td>Martes y Jueves</td><td>16:00 y 19:00 hs</td><td>Kevin Grossenbacher</td></tr>
-        <tr><td>Acrobungee (niños)</td><td>Martes y Jueves</td><td>18:00 hs</td><td>Kevin Grossenbacher</td></tr>
-        <tr><td>Movimiento primal</td><td>Viernes</td><td>18:00 hs</td><td>Kevin Grossenbacher</td></tr>
-      </tbody>
-    </table>
+  <div class="horarios-days">
+    <div class="horario-day glass reveal">
+      <h3>Lunes</h3>
+      <div class="horario-slot">
+        <div class="horario-time">09:00 - 12:00</div>
+        <div class="horario-class">Musculación</div>
+        <div class="horario-meta">Kevin Grossenbacher</div>
+      </div>
+      <div class="horario-slot">
+        <div class="horario-time">18:00 - 19:00</div>
+        <div class="horario-class">Danza Clásica</div>
+        <div class="horario-meta">Lily Leguizamón · Cupo 10</div>
+      </div>
+      <div class="horario-slot">
+        <div class="horario-time">19:00 - 20:00</div>
+        <div class="horario-class">Danza Clásica</div>
+        <div class="horario-meta">Lily Leguizamón · Cupo 8</div>
+      </div>
+      <div class="horario-slot">
+        <div class="horario-time">20:00 - 20:45</div>
+        <div class="horario-class">Flexibilidad</div>
+        <div class="horario-meta">Kevin Grossenbacher · Cupo 6</div>
+      </div>
+    </div>
+
+    <div class="horario-day glass reveal">
+      <h3>Martes</h3>
+      <div class="horario-slot">
+        <div class="horario-time">09:00 - 12:00</div>
+        <div class="horario-class">Musculación</div>
+        <div class="horario-meta">Kevin Grossenbacher</div>
+      </div>
+      <div class="horario-slot">
+        <div class="horario-time">16:00 - 17:00</div>
+        <div class="horario-class">Acrobungee</div>
+        <div class="horario-meta">Kevin Grossenbacher · Cupo 6</div>
+      </div>
+      <div class="horario-slot">
+        <div class="horario-time">17:00 - 18:00</div>
+        <div class="horario-class">Calistenia</div>
+        <div class="horario-meta">Kevin Grossenbacher · Cupo 10</div>
+      </div>
+      <div class="horario-slot">
+        <div class="horario-time">18:00 - 19:00</div>
+        <div class="horario-class">Acrobungee Niños</div>
+        <div class="horario-meta">Kevin Grossenbacher · Cupo 7</div>
+      </div>
+      <div class="horario-slot">
+        <div class="horario-time">19:00 - 20:00</div>
+        <div class="horario-class">Acrobungee</div>
+        <div class="horario-meta">Kevin Grossenbacher · Cupo 6</div>
+      </div>
+      <div class="horario-slot">
+        <div class="horario-time">20:00 - 20:45</div>
+        <div class="horario-class">Flexibilidad</div>
+        <div class="horario-meta">Kevin Grossenbacher · Cupo 6</div>
+      </div>
+    </div>
+
+    <div class="horario-day glass reveal">
+      <h3>Miércoles</h3>
+      <div class="horario-slot">
+        <div class="horario-time">09:00 - 12:00</div>
+        <div class="horario-class">Musculación</div>
+        <div class="horario-meta">Kevin Grossenbacher</div>
+      </div>
+      <div class="horario-slot">
+        <div class="horario-time">18:00 - 19:00</div>
+        <div class="horario-class">Danza Clásica</div>
+        <div class="horario-meta">Lily Leguizamón · Cupo 10</div>
+      </div>
+      <div class="horario-slot">
+        <div class="horario-time">19:00 - 20:00</div>
+        <div class="horario-class">Danza Clásica</div>
+        <div class="horario-meta">Lily Leguizamón · Cupo 8</div>
+      </div>
+      <div class="horario-slot">
+        <div class="horario-time">20:00 - 20:45</div>
+        <div class="horario-class">Flexibilidad</div>
+        <div class="horario-meta">Kevin Grossenbacher · Cupo 6</div>
+      </div>
+      <div class="horario-slot">
+        <div class="horario-time">21:00 - 22:00</div>
+        <div class="horario-class">Bachata</div>
+        <div class="horario-meta">Lily Leguizamón · Cupo 10</div>
+      </div>
+    </div>
+
+    <div class="horario-day glass reveal">
+      <h3>Jueves</h3>
+      <div class="horario-slot">
+        <div class="horario-time">09:00 - 12:00</div>
+        <div class="horario-class">Musculación</div>
+        <div class="horario-meta">Kevin Grossenbacher</div>
+      </div>
+      <div class="horario-slot">
+        <div class="horario-time">16:00 - 17:00</div>
+        <div class="horario-class">Acrobungee</div>
+        <div class="horario-meta">Kevin Grossenbacher · Cupo 5</div>
+      </div>
+      <div class="horario-slot">
+        <div class="horario-time">17:00 - 18:00</div>
+        <div class="horario-class">Calistenia</div>
+        <div class="horario-meta">Kevin Grossenbacher · Cupo 10</div>
+      </div>
+      <div class="horario-slot">
+        <div class="horario-time">18:00 - 19:00</div>
+        <div class="horario-class">Acrobungee Niños</div>
+        <div class="horario-meta">Kevin Grossenbacher · Cupo 8</div>
+      </div>
+      <div class="horario-slot">
+        <div class="horario-time">19:00 - 20:00</div>
+        <div class="horario-class">Acrobungee</div>
+        <div class="horario-meta">Kevin Grossenbacher · Cupo 5</div>
+      </div>
+    </div>
+
+    <div class="horario-day glass reveal">
+      <h3>Viernes</h3>
+      <div class="horario-slot">
+        <div class="horario-time">09:00 - 12:00</div>
+        <div class="horario-class">Musculación</div>
+        <div class="horario-meta">Kevin Grossenbacher</div>
+      </div>
+      <div class="horario-slot">
+        <div class="horario-time">18:00 - 19:00</div>
+        <div class="horario-class">Animal Flow</div>
+        <div class="horario-meta">Kevin Grossenbacher · Cupo 6</div>
+      </div>
+      <div class="horario-slot">
+        <div class="horario-time">19:00 - 20:00</div>
+        <div class="horario-class">Danza Clásica</div>
+        <div class="horario-meta">Lily Leguizamón · Cupo 8</div>
+      </div>
+      <div class="horario-slot">
+        <div class="horario-time">20:00 - 21:00</div>
+        <div class="horario-class">Danza Clásica Mayores</div>
+        <div class="horario-meta">Lily Leguizamón · Cupo 8</div>
+      </div>
+      <div class="horario-slot">
+        <div class="horario-time">21:00 - 22:30</div>
+        <div class="horario-class">Bachata</div>
+        <div class="horario-meta">Lily Leguizamón · Cupo 10</div>
+      </div>
+    </div>
   </div>
 </section>
 
