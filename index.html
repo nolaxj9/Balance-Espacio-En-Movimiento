@@ -70,6 +70,20 @@
     mask-image:radial-gradient(ellipse 80% 60% at 50% 0%, #000 30%, transparent 90%);
   }
 
+  /* BALANCE WATERMARK — la propia marca (figura en equilibrio) como fondo sutil */
+  .balance-watermark{
+    position:fixed; z-index:0; pointer-events:none;
+    right:-6vw; bottom:-6vh;
+    width:46vw; max-width:640px; min-width:280px;
+    height:auto;
+    opacity:0.05;
+    transform:rotate(-3deg);
+    filter:drop-shadow(0 0 40px rgba(255,255,255,0.08));
+  }
+  @media (max-width:768px){
+    .balance-watermark{width:78vw; right:-16vw; bottom:-3vh; opacity:0.04;}
+  }
+
   /* HEADER */
   header{
     position:fixed; top:0; left:0; right:0; z-index:100;
@@ -366,6 +380,7 @@
 <body>
 
 <div class="noise-grid"></div>
+<img class="balance-watermark" src="assets/dancer-watermark.png" alt="" aria-hidden="true">
 
 <header id="header">
   <a href="#top" class="logo-mark">
