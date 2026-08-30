@@ -83,8 +83,22 @@
     -webkit-backdrop-filter:blur(16px) saturate(140%);
     box-shadow:0 1px 0 var(--glass-border);
   }
-  .logo-mark{display:flex; align-items:center; gap:10px;}
-  .logo-mark img{height:36px; width:auto; filter:drop-shadow(0 0 12px rgba(255,255,255,0.35));}
+  .logo-mark{display:flex; align-items:center; gap:10px; perspective:400px;}
+  .logo-mark img{
+    height:34px; width:auto; transform-style:preserve-3d;
+    filter:
+      drop-shadow(0 1px 0 rgba(255,255,255,0.5))
+      drop-shadow(0 3px 6px rgba(0,0,0,0.55))
+      drop-shadow(0 0 16px rgba(255,255,255,0.3));
+    transition:transform .4s cubic-bezier(.2,.8,.2,1), filter .4s ease;
+  }
+  .logo-mark:hover img{
+    transform:rotateY(-14deg) rotateX(6deg) scale(1.06);
+    filter:
+      drop-shadow(0 1px 0 rgba(255,255,255,0.6))
+      drop-shadow(4px 6px 10px rgba(0,0,0,0.6))
+      drop-shadow(0 0 22px rgba(255,255,255,0.45));
+  }
   .logo-mark span{font-family:'Space Grotesk'; font-weight:600; font-size:0.95rem; letter-spacing:0.01em;}
   nav{display:flex; align-items:center; gap:32px; font-size:0.82rem; letter-spacing:0.03em;}
   nav a:not(.btn){opacity:0.72; transition:opacity .2s, color .2s; position:relative;}
@@ -355,7 +369,7 @@
 
 <header id="header">
   <a href="#top" class="logo-mark">
-    <img src="assets/logo.png" alt="Balance Espacio en Movimiento">
+    <img src="assets/logo-icon-white.png" alt="Balance Espacio en Movimiento">
     <span>Balance</span>
   </a>
   <nav id="nav">
@@ -619,6 +633,11 @@
         <div class="horario-class">Acrobungee</div>
         <div class="horario-meta">Kevin Grossenbacher · Cupo 5</div>
       </div>
+      <div class="horario-slot">
+        <div class="horario-time">20:00 - 20:45</div>
+        <div class="horario-class">Flexibilidad</div>
+        <div class="horario-meta">Kevin Grossenbacher · Cupo 6</div>
+      </div>
     </div>
 
     <div class="horario-day glass reveal">
@@ -721,7 +740,7 @@
   <div class="wrap">
     <div class="footer-grid">
       <a href="#top" class="logo-mark">
-        <img src="assets/logo.png" alt="Balance Espacio en Movimiento">
+        <img src="assets/logo-icon-white.png" alt="Balance Espacio en Movimiento">
         <span>Balance Espacio en Movimiento</span>
       </a>
       <div class="footer-links">
