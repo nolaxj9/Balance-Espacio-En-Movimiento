@@ -915,36 +915,57 @@
       window.addEventListener('resize', resize);
 
       var core = new THREE.Group();
+      core.position.y = 3.0;
       scene.add(core);
 
-      // Aros en equilibrio: representan balance y movimiento (giroscopio)
-      var ringMat = new THREE.MeshStandardMaterial({
-        color: 0xDDA84F, emissive: 0xDDA84F, emissiveIntensity:0.75,
-        metalness:0.85, roughness:0.25, transparent:true, opacity:0.85
-      });
-      var ring1 = new THREE.Mesh(new THREE.TorusGeometry(2.3, 0.04, 24, 120), ringMat);
-      core.add(ring1);
+      // Bailarina esculpida en partículas — reemplaza los aros (no representaban
+      // la marca) y se ubica arriba, sin tapar el título.
+      var heroDancerImg = new Image();
+      heroDancerImg.crossOrigin = 'anonymous';
+      heroDancerImg.onload = function(){
+        var off = document.createElement('canvas');
+        off.width = heroDancerImg.width; off.height = heroDancerImg.height;
+        var octx = off.getContext('2d');
+        octx.drawImage(heroDancerImg, 0, 0);
+        var data;
+        try { data = octx.getImageData(0, 0, off.width, off.height).data; }
+        catch(e){ return; }
 
-      var ringMat2 = new THREE.MeshStandardMaterial({
-        color: 0xFFFFFF, emissive: 0xF0C878, emissiveIntensity:0.5,
-        metalness:0.8, roughness:0.3, transparent:true, opacity:0.55
-      });
-      var ring2 = new THREE.Mesh(new THREE.TorusGeometry(2.3, 0.028, 24, 120), ringMat2);
-      ring2.rotation.x = Math.PI / 2.4;
-      core.add(ring2);
+        var step = 2;
+        var basePts = [];
+        for(var y=0; y<off.height; y+=step){
+          for(var x=0; x<off.width; x+=step){
+            var idx = (y*off.width + x) * 4;
+            if(data[idx+3] > 120){ basePts.push(x, y); }
+          }
+        }
+        if(!basePts.length) return;
 
-      var ring3 = new THREE.Mesh(new THREE.TorusGeometry(1.7, 0.022, 20, 100), ringMat2);
-      ring3.rotation.x = Math.PI / 3.4;
-      ring3.rotation.y = Math.PI / 5;
-      core.add(ring3);
+        var w = off.width, h = off.height;
+        var scale = 1.9 / Math.max(w, h);
+        var layers = 6;
+        var zSpread = 0.28;
+        var positions = new Float32Array((basePts.length/2) * layers * 3);
+        var p = 0;
+        for(var L=0; L<layers; L++){
+          var zOff = (L/(layers-1) - 0.5) * zSpread * 2;
+          for(var i=0; i<basePts.length; i+=2){
+            var px = basePts[i], py = basePts[i+1];
+            positions[p++] = (px - w/2) * scale + (Math.random()-0.5)*0.015;
+            positions[p++] = (h/2 - py) * scale + (Math.random()-0.5)*0.015;
+            positions[p++] = zOff + (Math.random()-0.5)*0.05;
+          }
+        }
 
-      var innerGeo = new THREE.IcosahedronGeometry(0.6, 1);
-      var innerMat = new THREE.MeshStandardMaterial({
-        color: 0xDDA84F, emissive: 0xDDA84F, emissiveIntensity:1.2,
-        metalness:0.9, roughness:0.15, transparent:true, opacity:0.95
-      });
-      var innerMesh = new THREE.Mesh(innerGeo, innerMat);
-      core.add(innerMesh);
+        var dGeo = new THREE.BufferGeometry();
+        dGeo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+        var dMat = new THREE.PointsMaterial({
+          color:0xDDA84F, size:0.022, transparent:true, opacity:0.9,
+          blending:THREE.AdditiveBlending, depthWrite:false
+        });
+        core.add(new THREE.Points(dGeo, dMat));
+      };
+      heroDancerImg.src = 'assets/dancer-watermark.png';
 
       var light1 = new THREE.PointLight(0xDDA84F, 5.5, 12);
       light1.position.set(3, 2, 4);
@@ -999,15 +1020,9 @@
         requestAnimationFrame(animate);
         if(!visible) return;
         var t = clock.getElapsedTime();
-        core.rotation.y = t * 0.12;
-        core.rotation.x = Math.sin(t*0.2) * 0.15;
-        core.scale.setScalar(1 + Math.sin(t*0.6) * 0.02);
-        ring1.rotation.x = t * 0.22;
-        ring1.rotation.z = t * 0.1;
-        ring2.rotation.y = t * 0.28;
-        ring3.rotation.z = -t * 0.32;
-        innerMesh.rotation.y = -t * 0.4;
-        innerMesh.rotation.x = t * 0.3;
+        core.rotation.y = t * 0.25;
+        core.rotation.x = Math.sin(t*0.3) * 0.1;
+        core.position.y = 3.0 + Math.sin(t * 0.5) * 0.06;
 
         targetX += (mouseX - targetX) * 0.04;
         targetY += (mouseY - targetY) * 0.04;
