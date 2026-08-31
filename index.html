@@ -915,7 +915,7 @@
       window.addEventListener('resize', resize);
 
       var core = new THREE.Group();
-      core.position.y = 3.0;
+      core.position.y = 3.7;
       scene.add(core);
 
       // Bailarina esculpida en partículas — reemplaza los aros (no representaban
@@ -942,7 +942,7 @@
         if(!basePts.length) return;
 
         var w = off.width, h = off.height;
-        var scale = 1.9 / Math.max(w, h);
+        var scale = 1.55 / Math.max(w, h);
         var layers = 6;
         var zSpread = 0.28;
         var positions = new Float32Array((basePts.length/2) * layers * 3);
@@ -1022,7 +1022,7 @@
         var t = clock.getElapsedTime();
         core.rotation.y = t * 0.25;
         core.rotation.x = Math.sin(t*0.3) * 0.1;
-        core.position.y = 3.0 + Math.sin(t * 0.5) * 0.06;
+        core.position.y = 3.7 + Math.sin(t * 0.5) * 0.06;
 
         targetX += (mouseX - targetX) * 0.04;
         targetY += (mouseY - targetY) * 0.04;
