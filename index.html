@@ -905,18 +905,26 @@
       var camera = new THREE.PerspectiveCamera(55, canvas.clientWidth/canvas.clientHeight, 0.1, 100);
       camera.position.z = 8.5;
 
+      var DANCER_X_FRACTION = 0.85;
+      var DANCER_Y = 1.6;
+      var core = new THREE.Group();
+      core.position.set(0, DANCER_Y, 0);
+      scene.add(core);
+
+      function updateDancerX(){
+        var halfW = camera.position.z * Math.tan(THREE.MathUtils.degToRad(camera.fov/2)) * camera.aspect;
+        core.position.x = -halfW * DANCER_X_FRACTION;
+      }
+
       function resize(){
         var w = canvas.clientWidth, h = canvas.clientHeight;
         renderer.setSize(w, h, false);
         camera.aspect = w/h;
         camera.updateProjectionMatrix();
+        updateDancerX();
       }
       resize();
       window.addEventListener('resize', resize);
-
-      var core = new THREE.Group();
-      core.position.set(-3.6, 4.0, 0);
-      scene.add(core);
 
       // Bailarina esculpida en partículas — reemplaza los aros (no representaban
       // la marca) y se ubica arriba, sin tapar el título.
@@ -1022,8 +1030,7 @@
         var t = clock.getElapsedTime();
         core.rotation.y = t * 0.25;
         core.rotation.x = Math.sin(t*0.3) * 0.1;
-        core.position.y = 4.0 + Math.sin(t * 0.5) * 0.06;
-        core.position.x = -3.6;
+        core.position.y = DANCER_Y + Math.sin(t * 0.5) * 0.06;
 
         targetX += (mouseX - targetX) * 0.04;
         targetY += (mouseY - targetY) * 0.04;
