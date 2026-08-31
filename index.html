@@ -71,6 +71,37 @@
     mask-image:radial-gradient(ellipse 80% 60% at 50% 0%, #000 30%, transparent 90%);
   }
 
+  /* ESTRELLAS DORADAS — fondo estelar en toda la página */
+  .stars{position:fixed; inset:0; z-index:0; pointer-events:none; overflow:hidden;}
+  .stars::before, .stars::after{
+    content:''; position:absolute; inset:-20%;
+    background-repeat:repeat;
+    background-image:
+      radial-gradient(1.6px 1.6px at 8% 12%, rgba(221,168,79,0.95) 50%, transparent 52%),
+      radial-gradient(1.2px 1.2px at 22% 38%, rgba(240,200,120,0.75) 50%, transparent 52%),
+      radial-gradient(1.8px 1.8px at 38% 68%, rgba(221,168,79,0.85) 50%, transparent 52%),
+      radial-gradient(1.3px 1.3px at 55% 18%, rgba(240,200,120,0.65) 50%, transparent 52%),
+      radial-gradient(1.5px 1.5px at 68% 82%, rgba(221,168,79,0.75) 50%, transparent 52%),
+      radial-gradient(1.1px 1.1px at 78% 45%, rgba(240,200,120,0.6) 50%, transparent 52%),
+      radial-gradient(1.7px 1.7px at 90% 25%, rgba(221,168,79,0.9) 50%, transparent 52%),
+      radial-gradient(1.2px 1.2px at 95% 90%, rgba(240,200,120,0.6) 50%, transparent 52%),
+      radial-gradient(1.4px 1.4px at 15% 92%, rgba(221,168,79,0.7) 50%, transparent 52%),
+      radial-gradient(1.3px 1.3px at 45% 48%, rgba(240,200,120,0.65) 50%, transparent 52%);
+    background-size:360px 360px;
+    animation:starsDrift 100s linear infinite, starsTwinkle 6s ease-in-out infinite alternate;
+  }
+  .stars::after{
+    background-size:560px 560px;
+    opacity:0.55;
+    animation-duration:150s, 8s;
+    animation-direction:reverse, alternate-reverse;
+  }
+  @keyframes starsDrift{ from{transform:translate(0,0);} to{transform:translate(-360px,-360px);} }
+  @keyframes starsTwinkle{ from{opacity:0.55;} to{opacity:1;} }
+  @media (prefers-reduced-motion: reduce){
+    .stars::before, .stars::after{ animation:none; }
+  }
+
   /* BALANCE WATERMARK — la propia marca (figura en equilibrio) como fondo sutil */
   .balance-watermark{
     position:fixed; z-index:0; pointer-events:none;
@@ -160,6 +191,7 @@
   }
   #hero-canvas{
     position:absolute; inset:0; z-index:1;
+    width:100%; height:100%;
     pointer-events:none;
   }
   .hero-content{position:relative; z-index:2; text-align:center; display:flex; flex-direction:column; align-items:center;}
@@ -327,7 +359,7 @@
   }
   .cta-final h2{font-size:clamp(2rem, 4.4vw, 3.2rem); max-width:760px; margin:0 auto 22px;}
   .cta-final p{color:var(--text-secondary); max-width:520px; margin:0 auto 36px; font-size:1.02rem;}
-  #cta-canvas{position:absolute; inset:0; z-index:0; opacity:0.7;}
+  #cta-canvas{position:absolute; inset:0; z-index:0; width:100%; height:100%; opacity:0.7;}
   .cta-final .inner{position:relative; z-index:1;}
 
   /* SEDES */
@@ -380,6 +412,7 @@
 </head>
 <body>
 
+<div class="stars"></div>
 <div class="noise-grid"></div>
 <img class="balance-watermark" src="assets/dancer-watermark.png" alt="" aria-hidden="true">
 
@@ -870,7 +903,7 @@
       renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
       var scene = new THREE.Scene();
       var camera = new THREE.PerspectiveCamera(55, canvas.clientWidth/canvas.clientHeight, 0.1, 100);
-      camera.position.z = 7;
+      camera.position.z = 8.5;
 
       function resize(){
         var w = canvas.clientWidth, h = canvas.clientHeight;
@@ -889,23 +922,23 @@
         color: 0xDDA84F, emissive: 0xDDA84F, emissiveIntensity:0.75,
         metalness:0.85, roughness:0.25, transparent:true, opacity:0.85
       });
-      var ring1 = new THREE.Mesh(new THREE.TorusGeometry(1.55, 0.028, 24, 120), ringMat);
+      var ring1 = new THREE.Mesh(new THREE.TorusGeometry(2.3, 0.04, 24, 120), ringMat);
       core.add(ring1);
 
       var ringMat2 = new THREE.MeshStandardMaterial({
         color: 0xFFFFFF, emissive: 0xF0C878, emissiveIntensity:0.5,
         metalness:0.8, roughness:0.3, transparent:true, opacity:0.55
       });
-      var ring2 = new THREE.Mesh(new THREE.TorusGeometry(1.55, 0.02, 24, 120), ringMat2);
+      var ring2 = new THREE.Mesh(new THREE.TorusGeometry(2.3, 0.028, 24, 120), ringMat2);
       ring2.rotation.x = Math.PI / 2.4;
       core.add(ring2);
 
-      var ring3 = new THREE.Mesh(new THREE.TorusGeometry(1.15, 0.016, 20, 100), ringMat2);
+      var ring3 = new THREE.Mesh(new THREE.TorusGeometry(1.7, 0.022, 20, 100), ringMat2);
       ring3.rotation.x = Math.PI / 3.4;
       ring3.rotation.y = Math.PI / 5;
       core.add(ring3);
 
-      var innerGeo = new THREE.IcosahedronGeometry(0.42, 1);
+      var innerGeo = new THREE.IcosahedronGeometry(0.6, 1);
       var innerMat = new THREE.MeshStandardMaterial({
         color: 0xDDA84F, emissive: 0xDDA84F, emissiveIntensity:1.2,
         metalness:0.9, roughness:0.15, transparent:true, opacity:0.95
