@@ -19,13 +19,14 @@
     --bg:#050505;
     --bg-elevated:#0a0a0a;
     --bg-card:rgba(255,255,255,0.035);
-    --primary:#FFFFFF;
+    --primary:#D4AF7A;
+    --primary-soft:#E8D6AE;
     --secondary:#B0B0B8;
-    --accent:#5C5C66;
+    --accent:#B08D57;
     --text:#FFFFFF;
     --text-secondary:#9B9BA3;
     --glass-border:rgba(255,255,255,0.09);
-    --glass-border-hover:rgba(255,255,255,0.35);
+    --glass-border-hover:rgba(212,175,122,0.4);
   }
   *{box-sizing:border-box; margin:0; padding:0;}
   html{scroll-behavior:auto;}
@@ -103,7 +104,7 @@
     filter:
       drop-shadow(0 1px 0 rgba(255,255,255,0.5))
       drop-shadow(0 3px 6px rgba(0,0,0,0.55))
-      drop-shadow(0 0 16px rgba(255,255,255,0.3));
+      drop-shadow(0 0 16px rgba(212,175,122,0.35));
     transition:transform .4s cubic-bezier(.2,.8,.2,1), filter .4s ease;
   }
   .logo-mark:hover img{
@@ -111,7 +112,7 @@
     filter:
       drop-shadow(0 1px 0 rgba(255,255,255,0.6))
       drop-shadow(4px 6px 10px rgba(0,0,0,0.6))
-      drop-shadow(0 0 22px rgba(255,255,255,0.45));
+      drop-shadow(0 0 22px rgba(212,175,122,0.55));
   }
   .logo-mark span{font-family:'Space Grotesk'; font-weight:600; font-size:0.95rem; letter-spacing:0.01em;}
   nav{display:flex; align-items:center; gap:32px; font-size:0.82rem; letter-spacing:0.03em;}
@@ -134,18 +135,18 @@
     white-space:nowrap;
   }
   .btn-solid{
-    background:linear-gradient(90deg, var(--primary), var(--secondary));
+    background:linear-gradient(90deg, var(--primary), var(--primary-soft));
     color:#0a0a0a;
-    box-shadow:0 0 24px rgba(255,255,255,0.35), 0 0 0 1px rgba(255,255,255,0.15) inset;
+    box-shadow:0 0 24px rgba(212,175,122,0.4), 0 0 0 1px rgba(255,255,255,0.15) inset;
   }
-  .btn-solid:hover{box-shadow:0 0 40px rgba(255,255,255,0.55), 0 0 0 1px rgba(255,255,255,0.25) inset;}
+  .btn-solid:hover{box-shadow:0 0 40px rgba(212,175,122,0.6), 0 0 0 1px rgba(255,255,255,0.25) inset;}
   .btn-outline{
     border:1px solid var(--glass-border);
     color:var(--text);
     background:rgba(255,255,255,0.03);
     backdrop-filter:blur(10px);
   }
-  .btn-outline:hover{border-color:var(--glass-border-hover); box-shadow:0 0 24px rgba(255,255,255,0.18); color:var(--primary);}
+  .btn-outline:hover{border-color:var(--glass-border-hover); box-shadow:0 0 24px rgba(212,175,122,0.25); color:var(--primary);}
 
   .cta-row{display:flex; gap:16px; margin-top:38px; flex-wrap:wrap;}
 
@@ -162,7 +163,7 @@
     pointer-events:none;
   }
   .hero-content{position:relative; z-index:2; text-align:center; display:flex; flex-direction:column; align-items:center;}
-  .eyebrow{color:var(--primary); margin-bottom:22px; display:inline-block; text-shadow:0 0 20px rgba(255,255,255,0.5);}
+  .eyebrow{color:var(--primary); margin-bottom:22px; display:inline-block; text-shadow:0 0 20px rgba(212,175,122,0.55);}
   .hero h1{
     font-size:clamp(2.6rem, 6.4vw, 5rem);
     line-height:1.06;
@@ -252,7 +253,7 @@
     transition:transform .35s cubic-bezier(.2,.8,.2,1), border-color .35s ease, box-shadow .35s ease;
     transform-style:preserve-3d;
   }
-  .clase-card:hover{border-color:var(--glass-border-hover); box-shadow:0 20px 60px rgba(255,255,255,0.12);}
+  .clase-card:hover{border-color:var(--glass-border-hover); box-shadow:0 20px 60px rgba(212,175,122,0.15);}
   .clase-icon{
     width:52px; height:52px; border-radius:14px;
     display:flex; align-items:center; justify-content:center;
@@ -282,7 +283,7 @@
   .instructor{padding:44px 38px; position:relative; overflow:hidden;}
   .instructor::before{
     content:''; position:absolute; top:-40%; right:-30%; width:60%; height:120%;
-    background:radial-gradient(circle, rgba(255,255,255,0.12), transparent 70%);
+    background:radial-gradient(circle, rgba(212,175,122,0.14), transparent 70%);
     pointer-events:none;
   }
   .instructor h3{font-size:1.7rem; margin:14px 0 10px; font-weight:700;}
@@ -322,7 +323,7 @@
     position:relative; border-radius:28px; overflow:hidden;
     padding:90px 48px; text-align:center;
     border:1px solid var(--glass-border);
-    background:radial-gradient(ellipse at 50% 0%, rgba(176,176,184,0.16), transparent 60%), rgba(255,255,255,0.02);
+    background:radial-gradient(ellipse at 50% 0%, rgba(212,175,122,0.18), transparent 60%), rgba(255,255,255,0.02);
   }
   .cta-final h2{font-size:clamp(2rem, 4.4vw, 3.2rem); max-width:760px; margin:0 auto 22px;}
   .cta-final p{color:var(--text-secondary); max-width:520px; margin:0 auto 36px; font-size:1.02rem;}
@@ -882,27 +883,41 @@
 
       var core = new THREE.Group();
       scene.add(core);
-      var icoGeo = new THREE.IcosahedronGeometry(1.6, 1);
-      var icoMat = new THREE.MeshStandardMaterial({
-        color: 0xFFFFFF, emissive: 0x2a2a2e, metalness:0.6, roughness:0.15,
-        wireframe:true, transparent:true, opacity:0.55
-      });
-      var ico = new THREE.Mesh(icoGeo, icoMat);
-      core.add(ico);
 
-      var innerGeo = new THREE.IcosahedronGeometry(0.85, 2);
+      // Aros en equilibrio: representan balance y movimiento (giroscopio)
+      var ringMat = new THREE.MeshStandardMaterial({
+        color: 0xD4AF7A, emissive: 0xD4AF7A, emissiveIntensity:0.5,
+        metalness:0.85, roughness:0.25, transparent:true, opacity:0.85
+      });
+      var ring1 = new THREE.Mesh(new THREE.TorusGeometry(1.55, 0.028, 24, 120), ringMat);
+      core.add(ring1);
+
+      var ringMat2 = new THREE.MeshStandardMaterial({
+        color: 0xFFFFFF, emissive: 0xE8D6AE, emissiveIntensity:0.35,
+        metalness:0.8, roughness:0.3, transparent:true, opacity:0.55
+      });
+      var ring2 = new THREE.Mesh(new THREE.TorusGeometry(1.55, 0.02, 24, 120), ringMat2);
+      ring2.rotation.x = Math.PI / 2.4;
+      core.add(ring2);
+
+      var ring3 = new THREE.Mesh(new THREE.TorusGeometry(1.15, 0.016, 20, 100), ringMat2);
+      ring3.rotation.x = Math.PI / 3.4;
+      ring3.rotation.y = Math.PI / 5;
+      core.add(ring3);
+
+      var innerGeo = new THREE.IcosahedronGeometry(0.42, 1);
       var innerMat = new THREE.MeshStandardMaterial({
-        color: 0xB0B0B8, emissive: 0x5C5C66, emissiveIntensity:0.6,
-        metalness:0.8, roughness:0.2, transparent:true, opacity:0.85
+        color: 0xD4AF7A, emissive: 0xD4AF7A, emissiveIntensity:0.9,
+        metalness:0.9, roughness:0.15, transparent:true, opacity:0.95
       });
       var innerMesh = new THREE.Mesh(innerGeo, innerMat);
       core.add(innerMesh);
 
-      var light1 = new THREE.PointLight(0xFFFFFF, 3, 12);
+      var light1 = new THREE.PointLight(0xD4AF7A, 4, 12);
       light1.position.set(3, 2, 4);
-      var light2 = new THREE.PointLight(0x5C5C66, 3, 12);
+      var light2 = new THREE.PointLight(0xFFFFFF, 2.5, 12);
       light2.position.set(-3, -2, 3);
-      var ambient = new THREE.AmbientLight(0x333333, 1.2);
+      var ambient = new THREE.AmbientLight(0x3a3228, 1.2);
       scene.add(light1, light2, ambient);
 
       var particleCount = window.innerWidth < 700 ? 400 : 900;
@@ -914,7 +929,7 @@
       }
       var pGeo = new THREE.BufferGeometry();
       pGeo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-      var pMat = new THREE.PointsMaterial({color:0xFFFFFF, size:0.03, transparent:true, opacity:0.55, blending:THREE.AdditiveBlending, depthWrite:false});
+      var pMat = new THREE.PointsMaterial({color:0xE8D6AE, size:0.03, transparent:true, opacity:0.6, blending:THREE.AdditiveBlending, depthWrite:false});
       var points = new THREE.Points(pGeo, pMat);
       scene.add(points);
 
@@ -933,7 +948,7 @@
       }
       var lineGeo = new THREE.BufferGeometry();
       lineGeo.setAttribute('position', new THREE.BufferAttribute(new Float32Array(linePositions), 3));
-      var lineMat = new THREE.LineBasicMaterial({color:0xB0B0B8, transparent:true, opacity:0.18});
+      var lineMat = new THREE.LineBasicMaterial({color:0xB08D57, transparent:true, opacity:0.2});
       var lineMesh = new THREE.LineSegments(lineGeo, lineMat);
       scene.add(lineMesh);
 
@@ -953,8 +968,13 @@
         var t = clock.getElapsedTime();
         core.rotation.y = t * 0.12;
         core.rotation.x = Math.sin(t*0.2) * 0.15;
-        innerMesh.rotation.y = -t * 0.25;
-        innerMesh.rotation.x = t * 0.18;
+        core.scale.setScalar(1 + Math.sin(t*0.6) * 0.02);
+        ring1.rotation.x = t * 0.22;
+        ring1.rotation.z = t * 0.1;
+        ring2.rotation.y = t * 0.28;
+        ring3.rotation.z = -t * 0.32;
+        innerMesh.rotation.y = -t * 0.4;
+        innerMesh.rotation.x = t * 0.3;
 
         targetX += (mouseX - targetX) * 0.04;
         targetY += (mouseY - targetY) * 0.04;
@@ -988,12 +1008,12 @@
       }
 
       var geo = new THREE.TorusKnotGeometry(1.1, 0.32, 140, 20);
-      var mat = new THREE.MeshStandardMaterial({color:0x5C5C66, emissive:0xFFFFFF, emissiveIntensity:0.35, metalness:0.7, roughness:0.2, wireframe:true, transparent:true, opacity:0.5});
+      var mat = new THREE.MeshStandardMaterial({color:0xB08D57, emissive:0xD4AF7A, emissiveIntensity:0.4, metalness:0.75, roughness:0.2, wireframe:true, transparent:true, opacity:0.5});
       var knot = new THREE.Mesh(geo, mat);
       scene.add(knot);
-      var l1 = new THREE.PointLight(0xFFFFFF, 3, 10); l1.position.set(3,2,4);
-      var l2 = new THREE.PointLight(0xB0B0B8, 2, 10); l2.position.set(-3,-2,3);
-      scene.add(l1, l2, new THREE.AmbientLight(0x333333, 1));
+      var l1 = new THREE.PointLight(0xD4AF7A, 3, 10); l1.position.set(3,2,4);
+      var l2 = new THREE.PointLight(0xFFFFFF, 2, 10); l2.position.set(-3,-2,3);
+      scene.add(l1, l2, new THREE.AmbientLight(0x3a3228, 1));
 
       var ro = new ResizeObserver(resize);
       ro.observe(canvas);
