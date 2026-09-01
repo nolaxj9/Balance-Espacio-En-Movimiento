@@ -905,75 +905,14 @@
       var camera = new THREE.PerspectiveCamera(55, canvas.clientWidth/canvas.clientHeight, 0.1, 100);
       camera.position.z = 8.5;
 
-      var DANCER_X_FRACTION = 0.85;
-      var DANCER_Y = 1.6;
-      var core = new THREE.Group();
-      core.position.set(0, DANCER_Y, 0);
-      scene.add(core);
-
-      function updateDancerX(){
-        var halfW = camera.position.z * Math.tan(THREE.MathUtils.degToRad(camera.fov/2)) * camera.aspect;
-        core.position.x = -halfW * DANCER_X_FRACTION;
-      }
-
       function resize(){
         var w = canvas.clientWidth, h = canvas.clientHeight;
         renderer.setSize(w, h, false);
         camera.aspect = w/h;
         camera.updateProjectionMatrix();
-        updateDancerX();
       }
       resize();
       window.addEventListener('resize', resize);
-
-      // Bailarina esculpida en partículas — reemplaza los aros (no representaban
-      // la marca) y se ubica arriba, sin tapar el título.
-      var heroDancerImg = new Image();
-      heroDancerImg.crossOrigin = 'anonymous';
-      heroDancerImg.onload = function(){
-        var off = document.createElement('canvas');
-        off.width = heroDancerImg.width; off.height = heroDancerImg.height;
-        var octx = off.getContext('2d');
-        octx.drawImage(heroDancerImg, 0, 0);
-        var data;
-        try { data = octx.getImageData(0, 0, off.width, off.height).data; }
-        catch(e){ return; }
-
-        var step = 2;
-        var basePts = [];
-        for(var y=0; y<off.height; y+=step){
-          for(var x=0; x<off.width; x+=step){
-            var idx = (y*off.width + x) * 4;
-            if(data[idx+3] > 120){ basePts.push(x, y); }
-          }
-        }
-        if(!basePts.length) return;
-
-        var w = off.width, h = off.height;
-        var scale = 1.35 / Math.max(w, h);
-        var layers = 6;
-        var zSpread = 0.28;
-        var positions = new Float32Array((basePts.length/2) * layers * 3);
-        var p = 0;
-        for(var L=0; L<layers; L++){
-          var zOff = (L/(layers-1) - 0.5) * zSpread * 2;
-          for(var i=0; i<basePts.length; i+=2){
-            var px = basePts[i], py = basePts[i+1];
-            positions[p++] = (px - w/2) * scale + (Math.random()-0.5)*0.015;
-            positions[p++] = (h/2 - py) * scale + (Math.random()-0.5)*0.015;
-            positions[p++] = zOff + (Math.random()-0.5)*0.05;
-          }
-        }
-
-        var dGeo = new THREE.BufferGeometry();
-        dGeo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-        var dMat = new THREE.PointsMaterial({
-          color:0xDDA84F, size:0.022, transparent:true, opacity:0.9,
-          blending:THREE.AdditiveBlending, depthWrite:false
-        });
-        core.add(new THREE.Points(dGeo, dMat));
-      };
-      heroDancerImg.src = 'assets/ballerina-new.png';
 
       var light1 = new THREE.PointLight(0xDDA84F, 5.5, 12);
       light1.position.set(3, 2, 4);
@@ -1028,9 +967,6 @@
         requestAnimationFrame(animate);
         if(!visible) return;
         var t = clock.getElapsedTime();
-        core.rotation.y = t * 0.25;
-        core.rotation.x = Math.sin(t*0.3) * 0.1;
-        core.position.y = DANCER_Y + Math.sin(t * 0.5) * 0.06;
 
         targetX += (mouseX - targetX) * 0.04;
         targetY += (mouseY - targetY) * 0.04;
@@ -1041,98 +977,6 @@
         points.rotation.y = t * 0.015;
         lineMesh.rotation.y = t * 0.015;
 
-        renderer.render(scene, camera);
-      }
-      animate();
-    })();
-
-    (function ctaScene(){
-      var canvas = document.getElementById('cta-canvas');
-      if(!canvas) return;
-      var renderer = new THREE.WebGLRenderer({canvas: canvas, alpha:true, antialias:true});
-      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-      var scene = new THREE.Scene();
-      var camera = new THREE.PerspectiveCamera(50, canvas.clientWidth/(canvas.clientHeight||1), 0.1, 50);
-      camera.position.z = 6;
-
-      function resize(){
-        var w = canvas.clientWidth, h = canvas.clientHeight;
-        if(!w || !h) return;
-        renderer.setSize(w, h, false);
-        camera.aspect = w/h;
-        camera.updateProjectionMatrix();
-      }
-
-      // Bailarina esculpida en partículas: se arma a partir de la silueta de la
-      // marca (la figura en equilibrio del logo), no una forma abstracta.
-      var dancerGroup = new THREE.Group();
-      scene.add(dancerGroup);
-
-      var dancerImg = new Image();
-      dancerImg.crossOrigin = 'anonymous';
-      dancerImg.onload = function(){
-        var off = document.createElement('canvas');
-        off.width = dancerImg.width; off.height = dancerImg.height;
-        var octx = off.getContext('2d');
-        octx.drawImage(dancerImg, 0, 0);
-        var data;
-        try { data = octx.getImageData(0, 0, off.width, off.height).data; }
-        catch(e){ return; }
-
-        var step = 2;
-        var basePts = [];
-        for(var y=0; y<off.height; y+=step){
-          for(var x=0; x<off.width; x+=step){
-            var idx = (y*off.width + x) * 4;
-            if(data[idx+3] > 120){ basePts.push(x, y); }
-          }
-        }
-        if(!basePts.length) return;
-
-        var w = off.width, h = off.height;
-        var scale = 3.4 / Math.max(w, h);
-        var layers = 7;
-        var zSpread = 0.34;
-        var positions = new Float32Array((basePts.length/2) * layers * 3);
-        var p = 0;
-        for(var L=0; L<layers; L++){
-          var zOff = (L/(layers-1) - 0.5) * zSpread * 2;
-          for(var i=0; i<basePts.length; i+=2){
-            var px = basePts[i], py = basePts[i+1];
-            positions[p++] = (px - w/2) * scale + (Math.random()-0.5)*0.025;
-            positions[p++] = (h/2 - py) * scale + (Math.random()-0.5)*0.025;
-            positions[p++] = zOff + (Math.random()-0.5)*0.07;
-          }
-        }
-
-        var dGeo = new THREE.BufferGeometry();
-        dGeo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-        var dMat = new THREE.PointsMaterial({
-          color:0xDDA84F, size:0.03, transparent:true, opacity:0.88,
-          blending:THREE.AdditiveBlending, depthWrite:false
-        });
-        var dancerPoints = new THREE.Points(dGeo, dMat);
-        dancerGroup.add(dancerPoints);
-      };
-      dancerImg.src = 'assets/dancer-watermark.png';
-
-      var l1 = new THREE.PointLight(0xDDA84F, 4.5, 10); l1.position.set(3,2,4);
-      var l2 = new THREE.PointLight(0xFFFFFF, 2, 10); l2.position.set(-3,-2,3);
-      scene.add(l1, l2, new THREE.AmbientLight(0x3a3228, 1));
-
-      var ro = new ResizeObserver(resize);
-      ro.observe(canvas);
-      resize();
-
-      var visible = true;
-      document.addEventListener('visibilitychange', function(){ visible = !document.hidden; });
-      var clock = new THREE.Clock();
-      function animate(){
-        requestAnimationFrame(animate);
-        if(!visible) return;
-        var t = clock.getElapsedTime();
-        dancerGroup.rotation.y = t * 0.28;
-        dancerGroup.position.y = Math.sin(t * 0.5) * 0.08;
         renderer.render(scene, camera);
       }
       animate();
